@@ -44,9 +44,10 @@ public class TransactionService {
         Collection<Transaction> transactions = account.getTransactions();
         transactions.add(transaction);
         if (type == Transaction.TransactionType.DEPOSIT) { accountService.deposit(cbu, amount); }
-        else { accountService.withdraw(cbu, amount); }
+        else { accountService.withdraw(amount, cbu); }
 
         transactionRepository.save(transaction);
+
         return transaction;
     }
 

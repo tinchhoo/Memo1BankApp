@@ -27,13 +27,13 @@ public class AccountIntegrationServiceTest {
     Account withdraw(Account account, Double sum) {
         Transaction.TransactionType type = Transaction.TransactionType.WITHDRAW;
         transactionService.createTransaction(account.getCbu(), sum, type);
-        return accountService.withdraw(account.getCbu(), sum);
+        return accountService.findById(account.getCbu()).get();
     }
 
     Account deposit(Account account, Double sum) {
         Transaction.TransactionType type = Transaction.TransactionType.DEPOSIT;
         transactionService.createTransaction(account.getCbu(), sum, type);
-        return accountService.deposit(account.getCbu(), sum);
+        return accountService.findById(account.getCbu()).get();
     }
 
 }

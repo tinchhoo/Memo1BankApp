@@ -17,8 +17,6 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-
     public Account createAccount(Account account) {
         return accountRepository.save(account);
     }
@@ -40,14 +38,12 @@ public class AccountService {
     }
 
     @Transactional
-    public Account withdraw(Long cbu, Double sum) {
+    public Account withdraw(Double amount, Long cbu) {
         Account account = accountRepository.findAccountByCbu(cbu);
 
-        if (account.getBalance() < sum) {
-            throw new InsufficientFundsException("Insufficient funds");
-        }
+        if (account.getBalance() < amount) { throw new InsufficientFundsException("Insufficient funds"); }
 
-        account.setBalance(account.getBalance() - sum);
+        account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
 
         return account;
@@ -56,9 +52,7 @@ public class AccountService {
     @Transactional
     public Account deposit(Long cbu, Double sum) {
 
-        if (sum <= 0) {
-            throw new DepositNegativeSumException("Cannot deposit negative sums");
-        }
+        if (sum <= 0) { throw new DepositNegativeSumException("Cannot deposit negative sums"); }
 
         Account account = accountRepository.findAccountByCbu(cbu);
         account.setBalance(account.getBalance() + sum);

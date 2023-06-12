@@ -11,7 +11,7 @@ public class TransactionRequestDto {
         return amount;
     }
 
-    public void setAmount(double sum) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
